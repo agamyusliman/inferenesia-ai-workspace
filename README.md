@@ -46,6 +46,8 @@ Eight kinds of canvas, each with its own editor:
 
 ### The Table canvas is a spreadsheet
 
+![Table canvas showing a revenue and tax report with formulas](docs/images/table-spreadsheet.png)
+
 Not a data grid — a spreadsheet:
 
 - **Formulas.** A cell beginning with `=` is live: arithmetic, comparisons, `SUM`, `AVERAGE`, `MIN`, `MAX`, `COUNT`, `IF`, `IFERROR`, `ROUND`, text functions, ranges like `A2:A9`, `%` and `&`. Formulas are evaluated locally by a hand-written parser, **never by `eval`**, so a sheet cannot execute JavaScript. Self-referencing cells report `#CYCLE!` instead of hanging.
@@ -55,6 +57,20 @@ Not a data grid — a spreadsheet:
 - **Real Excel export.** `.xlsx` files written as genuine OOXML with live formulas, cell styles, column widths, row heights, hidden rows and columns, and merge ranges.
 
 Editing never strands your formatting: move, insert or delete a row and the styles, sizes, merges *and formula references* that pointed at it follow along.
+
+### Timeline, Diagram and Markdown canvases
+
+![Timeline canvas showing project milestones](docs/images/timeline.png)
+
+**Timeline** tracks milestones with start and end dates, status and owner, in either a schedule view or a plain list. It reads and writes CSV and JSON, so schedules move between this app and a spreadsheet without retyping.
+
+![Diagram canvas rendering a Mermaid flowchart](docs/images/diagram.png)
+
+**Diagram** renders Mermaid flowcharts, sequence diagrams and ERDs, with the source and the canvas side by side. Import a `.mmd` file, export the source, or export SVG, PNG or JPG.
+
+![Markdown canvas with outline and rendered preview](docs/images/markdown.png)
+
+**Markdown** is a document editor with a live outline, word and heading counts, and separate source and preview views. It stays a document — diagram chrome belongs to the Diagram canvas.
 
 ### Slides that export without moving
 

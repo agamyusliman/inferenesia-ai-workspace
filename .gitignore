@@ -221,10 +221,11 @@ user-data-dir/
 .multibrain/
 
 # Keep the folder, ignore the private design notes inside it.
-# Public documentation (install guide, contributing) is tracked deliberately.
+# Public documentation (install guide, contributing, screenshots) is tracked deliberately.
 /docs/*
 !/docs/README.md
 !/docs/INSTALL.md
+!/docs/images/
 
 # RAG / vector local stores stay private:
 .qdrant/
