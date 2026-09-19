@@ -33,6 +33,8 @@ Plan Mode stops mutating tools before they run, so you can think out loud withou
 
 Eight kinds of canvas, each with its own editor:
 
+![Playground showing the eight canvas types](docs/images/playground-create.png)
+
 | Kind | What it does |
 |------|--------------|
 | **Markdown doc** | Document with live outline, word and heading stats, source and preview |
@@ -64,13 +66,19 @@ Editing never strands your formatting: move, insert or delete a row and the styl
 
 **Timeline** tracks milestones with start and end dates, status and owner, in either a schedule view or a plain list. It reads and writes CSV and JSON, so schedules move between this app and a spreadsheet without retyping.
 
-![Diagram canvas rendering a Mermaid flowchart](docs/images/diagram.png)
+![Diagram canvas rendering a Mermaid flowchart](docs/images/diagram-export-flow.png)
 
 **Diagram** renders Mermaid flowcharts, sequence diagrams and ERDs, with the source and the canvas side by side. Import a `.mmd` file, export the source, or export SVG, PNG or JPG.
 
 ![Markdown canvas with outline and rendered preview](docs/images/markdown.png)
 
 **Markdown** is a document editor with a live outline, word and heading counts, and separate source and preview views. It stays a document — diagram chrome belongs to the Diagram canvas.
+
+### HTML pages, live
+
+![HTML page canvas with source and live preview](docs/images/html-page-preview.png)
+
+**HTML page** keeps source and rendered output side by side, so the agent can edit markup and you see the result immediately — no build step and no terminal round trip.
 
 ### Slides that export without moving
 
