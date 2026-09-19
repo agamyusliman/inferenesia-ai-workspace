@@ -1,0 +1,42 @@
+{
+  "name": "inferenesia-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --port 4150 --strictPort",
+    "build": "node src/features/docs/scripts/generate-articles.mjs && tsc --noEmit && vite build && node scripts/copy-dist.mjs",
+    "typecheck": "node src/features/docs/scripts/generate-articles.mjs && tsc --noEmit --pretty false",
+    "test:unit": "node --import tsx --test src/lib/platform.test.ts src/features/canvas-gallery/galleryStore.test.ts src/features/canvas-gallery/slides/htmlDeck.test.ts src/features/canvas-gallery/slides/slidesExport.test.ts src/features/canvas-gallery/tableFormula.test.ts src/features/canvas-gallery/xlsx.test.ts src/features/canvas-gallery/docAgent.test.ts src/features/diagrams/mermaidRender.test.ts src/features/shell/layoutWidths.test.ts src/features/shell/panelHeaderLayout.test.ts src/features/shell/terminalXterm.test.ts src/features/shell/terminalSnippets.test.ts src/features/workspaces/sessionTitle.test.ts src/features/editor/languageFromPath.test.ts src/features/editor/editorMode.test.ts src/features/editor/editorBuffer.test.ts src/features/canvas/excalidrawDoc.test.ts src/features/canvas/canvasAI.test.ts src/features/explorer/contextMenuItems.test.ts src/features/explorer/findInFolderScope.test.ts src/features/command-palette/commands.test.ts src/features/docs/docsCatalog.test.ts src/features/settings/maskBaseUrl.test.ts src/features/settings/tokenSavers.test.ts src/features/theme/theme.test.ts src/features/i18n/locale.test.ts src/features/i18n/messages.test.ts src/features/chat/modelPickerLabel.test.ts src/features/chat/chatStreamUx.test.ts src/features/chat/chatReliability.test.ts src/features/chat/chatAutoContinue.test.ts src/features/chat/chatImageGen.test.ts src/features/chat/chatSmartScroll.test.ts src/features/chat/messageChrome.test.ts src/features/chat/codeBlockUtils.test.ts src/features/chat/liveBlocks.test.ts src/features/chat/chatMetaBlocks.test.ts src/features/chat/chatAttachments.test.ts src/features/chat/messageActions.test.ts src/features/git/gitDiffLines.test.ts src/features/plan/todoStatus.test.ts src/features/mission/missionStatus.test.ts src/features/browser/browserPanel.test.ts src/features/web-preview/webPreview.test.ts src/features/web-preview/canvasPatch.test.ts",
+    "preview": "vite preview --port 4151 --strictPort",
+    "docs:gen": "node src/features/docs/scripts/generate-articles.mjs"
+  },
+  "dependencies": {
+    "@excalidraw/excalidraw": "^0.18.1",
+    "@monaco-editor/react": "^4.7.0",
+    "@xterm/addon-fit": "^0.11.0",
+    "@xterm/xterm": "^6.0.0",
+    "html-to-image": "^1.11.13",
+    "lucide-react": "^1.25.0",
+    "mermaid": "^11.16.0",
+    "monaco-editor": "^0.55.1",
+    "pdfjs-dist": "^5.6.205",
+    "pptxgenjs": "^4.0.1",
+    "react": "^19.1.0",
+    "react-arborist": "^3.13.2",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@vitejs/plugin-react": "^5.0.0",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.20.3",
+    "typescript": "^5.6.3",
+    "vite": "^7.0.0"
+  }
+}

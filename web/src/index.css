@@ -1,0 +1,699 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root,
+[data-theme='dark'] {
+  --shell-bg: #0f1419;
+  --shell-panel: #151b23;
+  --shell-border: #243041;
+  --shell-accent: #3b82f6;
+  --shell-primary: var(--shell-accent);
+  --shell-on-primary: #0f1419;
+  --shell-focus: #60a5fa;
+  --shell-muted: #8b9cb3;
+  --shell-text: #e7eef8;
+  --shell-active: #1e3a5f;
+  --shell-hover: color-mix(in srgb, var(--shell-active) 72%, var(--shell-panel));
+  --shell-user-bg: color-mix(in srgb, var(--shell-accent) 22%, var(--shell-bg));
+  --shell-user-border: color-mix(in srgb, var(--shell-accent) 55%, var(--shell-border));
+  --shell-scrollbar: color-mix(in srgb, var(--shell-muted) 40%, transparent);
+  --shell-scrollbar-hover: color-mix(in srgb, var(--shell-muted) 55%, transparent);
+  --shell-code-bg: #0b1016;
+  --shell-link: #60a5fa;
+}
+
+[data-theme='warm'] {
+  --shell-bg: #1a1816;
+  --shell-panel: #201e1b;
+  --shell-border: #3d3834;
+  --shell-accent: #d4845a;
+  --shell-primary: var(--shell-accent);
+  --shell-on-primary: #1a1816;
+  --shell-focus: #e0a07a;
+  --shell-muted: #a89f94;
+  --shell-text: #e8e4de;
+  --shell-active: #3a3028;
+  --shell-hover: color-mix(in srgb, var(--shell-active) 72%, var(--shell-panel));
+  --shell-user-bg: color-mix(in srgb, var(--shell-accent) 24%, var(--shell-bg));
+  --shell-user-border: color-mix(in srgb, var(--shell-accent) 58%, var(--shell-border));
+  --shell-scrollbar: color-mix(in srgb, var(--shell-muted) 40%, transparent);
+  --shell-scrollbar-hover: color-mix(in srgb, var(--shell-muted) 55%, transparent);
+  --shell-code-bg: #141210;
+  --shell-link: #e0a07a;
+}
+
+[data-theme='light'] {
+  --shell-bg: #f4f2ef;
+  --shell-panel: #ffffff;
+  --shell-border: #e0dbd4;
+  --shell-accent: #c96b3c;
+  --shell-primary: #ad4e26;
+  --shell-on-primary: #ffffff;
+  --shell-focus: #b4532a;
+  --shell-muted: #6b6560;
+  --shell-text: #1c1917;
+  --shell-active: #f0e6dc;
+  --shell-hover: color-mix(in srgb, var(--shell-active) 80%, var(--shell-panel));
+  --shell-user-bg: color-mix(in srgb, var(--shell-accent) 18%, #fff8f3);
+  --shell-user-border: color-mix(in srgb, var(--shell-accent) 50%, var(--shell-border));
+  --shell-scrollbar: color-mix(in srgb, var(--shell-muted) 40%, transparent);
+  --shell-scrollbar-hover: color-mix(in srgb, var(--shell-muted) 55%, transparent);
+  --shell-code-bg: #f0ebe4;
+  --shell-link: #b4532a;
+}
+
+/* Fill the browser window without overflowing past the edges. */
+html {
+  height: 100%;
+  height: 100dvh;
+  width: 100%;
+  max-width: 100vw;
+  margin: 0;
+  overflow: hidden;
+}
+
+body,
+#root {
+  height: 100%;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  min-height: 100%;
+  min-height: 100dvh;
+}
+
+body {
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  background: var(--shell-bg);
+  color: var(--shell-text);
+  transition: background-color 0.2s ease, color 0.2s ease;
+  /* Prevent accidental horizontal page scroll when panels are wide */
+  overflow-x: hidden;
+}
+
+.shell-transition {
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease,
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+@layer base {
+  :where(button, a, input, textarea, select, summary, [tabindex]):focus-visible {
+    outline: 2px solid var(--shell-focus);
+    outline-offset: 2px;
+  }
+
+  input::placeholder,
+  textarea::placeholder {
+    color: var(--shell-muted);
+    opacity: 1;
+  }
+}
+
+.shell-primary-button {
+  background-color: var(--shell-primary);
+  color: var(--shell-on-primary);
+  transition: filter 0.15s ease, transform 0.15s ease;
+}
+.shell-primary-button:hover:not(:disabled) {
+  filter: brightness(1.08);
+}
+.shell-primary-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+.shell-primary-button:disabled {
+  cursor: not-allowed;
+}
+
+.shell-activity-nav > button {
+  flex-shrink: 0;
+}
+
+.shell-activity-nav > button[aria-current='page'] {
+  color: var(--shell-focus);
+}
+
+@layer components {
+  .playground-workbench {
+    container-type: inline-size;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  .playground-agent-dock {
+    flex-shrink: 0;
+    min-height: 0;
+    max-height: 42%;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--shell-scrollbar) transparent;
+    border-top: 1px solid var(--shell-border);
+    background: var(--shell-panel);
+  }
+
+  .playground-agent-form {
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 10px 12px;
+  }
+
+  .playground-composer-input {
+    display: block;
+    width: 100%;
+    min-height: 72px;
+    max-height: 160px;
+    resize: vertical;
+    border: 1px solid var(--shell-border);
+    border-radius: 6px;
+    padding: 8px 10px;
+    background: var(--shell-bg);
+    color: var(--shell-text);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  .playground-composer-input:focus {
+    border-color: var(--shell-focus);
+    outline: 1px solid var(--shell-focus);
+    outline-offset: 0;
+  }
+}
+
+/* List rows: theme-aware hover/active (opacity modifiers fail on CSS vars). */
+.shell-list-item {
+  border: 1px solid transparent;
+  background-color: transparent;
+  transition:
+    background-color 0.12s ease,
+    border-color 0.12s ease,
+    color 0.12s ease;
+}
+.shell-list-item:hover:not(:disabled):not([data-active='true']) {
+  background-color: var(--shell-hover);
+  border-color: color-mix(in srgb, var(--shell-border) 85%, var(--shell-accent));
+}
+.shell-list-item[data-active='true'] {
+  background-color: var(--shell-active);
+  border-color: color-mix(in srgb, var(--shell-accent) 45%, var(--shell-border));
+}
+
+.shell-user-bubble {
+  background-color: var(--shell-user-bg);
+  border: 1px solid var(--shell-user-border);
+  box-shadow:
+    inset 3px 0 0 0 var(--shell-accent),
+    0 1px 2px color-mix(in srgb, var(--shell-accent) 14%, transparent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.shell-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--shell-scrollbar) transparent;
+}
+.shell-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+.shell-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.shell-scroll::-webkit-scrollbar-thumb {
+  background: var(--shell-scrollbar);
+  border-radius: 9999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+.shell-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--shell-scrollbar-hover);
+  background-clip: content-box;
+  border: 2px solid transparent;
+}
+.shell-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Explorer tree scrollbar (transparent track) */
+.explorer-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  overflow-x: hidden;
+}
+.explorer-scroll:hover {
+  scrollbar-color: var(--shell-scrollbar) transparent;
+}
+.explorer-scroll::-webkit-scrollbar {
+  width: 8px;
+  height: 0;
+  background: transparent;
+}
+.explorer-scroll::-webkit-scrollbar:horizontal {
+  height: 0;
+  display: none;
+}
+.explorer-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.explorer-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.explorer-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: var(--shell-scrollbar);
+  background-clip: padding-box;
+}
+.explorer-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--shell-scrollbar-hover);
+  background-clip: padding-box;
+}
+.explorer-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Chat list: vertical scroll only, transparent track (no white OS chrome) */
+.chat-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  overflow-x: hidden;
+}
+.chat-scroll:hover {
+  scrollbar-color: var(--shell-scrollbar) transparent;
+}
+.chat-scroll::-webkit-scrollbar {
+  width: 10px;
+  height: 0;
+  background: transparent;
+}
+.chat-scroll::-webkit-scrollbar:horizontal {
+  height: 0;
+  display: none;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.chat-scroll:hover::-webkit-scrollbar-thumb {
+  background-color: var(--shell-scrollbar);
+  background-clip: padding-box;
+}
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: var(--shell-scrollbar-hover);
+  background-clip: padding-box;
+}
+.chat-scroll::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Resizable panel splitters */
+[data-testid^='splitter-'] {
+  flex-shrink: 0;
+}
+
+/* react-arborist tree — hide default focus outline noise, keep keyboard focus visible */
+.explorer-arborist {
+  outline: none;
+  font-size: 12px;
+}
+.explorer-arborist [role='treeitem']:focus {
+  outline: none;
+}
+.explorer-arborist [role='treeitem']:focus-visible > div {
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--shell-accent) 55%, transparent);
+}
+
+/*
+ * Overlay-style scrollbars for Markdown preview (and nested pre blocks).
+ * Matches Monaco: thin, transparent track, appears on hover, no white chrome.
+ * Uses overlay so the scrollbar does not reserve layout width.
+ */
+.markdown-preview {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+  scrollbar-gutter: auto;
+}
+.markdown-preview:hover {
+  scrollbar-color: var(--shell-scrollbar) transparent;
+}
+.markdown-preview::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background: transparent;
+}
+.markdown-preview::-webkit-scrollbar-track {
+  background: transparent;
+}
+.markdown-preview::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.markdown-preview:hover::-webkit-scrollbar-thumb {
+  background-color: var(--shell-scrollbar);
+  background-clip: padding-box;
+}
+.markdown-preview::-webkit-scrollbar-thumb:hover {
+  background-color: var(--shell-scrollbar-hover);
+  background-clip: padding-box;
+}
+.markdown-preview::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Nested code blocks in MD preview use the same overlay scrollbar look */
+.markdown-preview pre {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+.markdown-preview pre:hover {
+  scrollbar-color: var(--shell-scrollbar) transparent;
+}
+.markdown-preview pre::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background: transparent;
+}
+.markdown-preview pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+.markdown-preview pre::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.markdown-preview pre:hover::-webkit-scrollbar-thumb {
+  background-color: var(--shell-scrollbar);
+  background-clip: padding-box;
+}
+.markdown-preview pre::-webkit-scrollbar-thumb:hover {
+  background-color: var(--shell-scrollbar-hover);
+  background-clip: padding-box;
+}
+.markdown-preview pre::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Markdown preview (GFM) */
+.markdown-preview h1,
+.markdown-preview h2,
+.markdown-preview h3,
+.markdown-preview h4 {
+  font-weight: 600;
+  color: var(--shell-text);
+  margin: 0.9em 0 0.4em;
+  line-height: 1.25;
+}
+.markdown-preview h1 {
+  font-size: 1.4em;
+  border-bottom: 1px solid var(--shell-border);
+  padding-bottom: 0.25em;
+}
+.markdown-preview h2 {
+  font-size: 1.2em;
+  border-bottom: 1px solid var(--shell-border);
+  padding-bottom: 0.2em;
+}
+.markdown-preview h3 {
+  font-size: 1.05em;
+}
+.markdown-preview p {
+  margin: 0.5em 0;
+}
+  .markdown-preview a {
+    color: var(--shell-link);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .markdown-preview ul {
+    margin: 0.45em 0 0.55em;
+    padding-left: 1.35em;
+    list-style-type: disc;
+    list-style-position: outside;
+  }
+  .markdown-preview ol {
+    margin: 0.45em 0 0.55em;
+    padding-left: 1.45em;
+    list-style-type: decimal;
+    list-style-position: outside;
+  }
+  .markdown-preview ul ul {
+    list-style-type: circle;
+    margin: 0.15em 0 0.25em;
+    padding-left: 1.25em;
+  }
+  .markdown-preview ul ul ul {
+    list-style-type: square;
+  }
+  .markdown-preview ol ol {
+    list-style-type: lower-alpha;
+    margin: 0.15em 0 0.25em;
+    padding-left: 1.25em;
+  }
+  .markdown-preview li {
+    margin: 0.2em 0;
+    padding-left: 0.2em;
+    display: list-item;
+    line-height: 1.45;
+  }
+  .markdown-preview li > p {
+    margin: 0.15em 0;
+  }
+  .markdown-preview li > ul,
+  .markdown-preview li > ol {
+    margin-top: 0.15em;
+    margin-bottom: 0.15em;
+  }
+  .markdown-preview li + li {
+    margin-top: 0.12em;
+  }
+.markdown-preview blockquote {
+  margin: 0.6em 0;
+  padding: 0.2em 0.8em;
+  border-left: 3px solid var(--shell-accent);
+  color: var(--shell-muted);
+}
+.markdown-preview code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.9em;
+  background: var(--shell-panel);
+  border: 1px solid var(--shell-border);
+  border-radius: 4px;
+  padding: 0.1em 0.35em;
+}
+.markdown-preview pre {
+  margin: 0.6em 0;
+  padding: 0.75em 1em;
+  overflow: auto;
+  background: var(--shell-code-bg);
+  border: 1px solid var(--shell-border);
+  border-radius: 6px;
+}
+.markdown-preview pre code {
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-size: 0.85em;
+}
+.markdown-preview table {
+  border-collapse: collapse;
+  margin: 0.6em 0;
+  width: 100%;
+  font-size: 0.92em;
+}
+.markdown-preview th,
+.markdown-preview td {
+  border: 1px solid var(--shell-border);
+  padding: 0.35em 0.6em;
+  text-align: left;
+}
+.markdown-preview th {
+  background: var(--shell-panel);
+}
+.markdown-preview hr {
+  border: none;
+  border-top: 1px solid var(--shell-border);
+  margin: 1em 0;
+}
+.markdown-preview img {
+  max-width: 100%;
+}
+.markdown-preview input[type='checkbox'] {
+  margin-right: 0.4em;
+}
+
+/*
+ * Chat markdown reuses editor GFM tokens with denser spacing and
+ * distinct fenced code chrome (VAL-CHAT-007/008/032).
+ */
+.chat-markdown.markdown-preview {
+  /* inherit base .markdown-preview rules; override density for chat bubbles */
+  font-size: 13px;
+}
+.chat-markdown.markdown-preview h1 {
+  font-size: 1.2em;
+  margin: 0.55em 0 0.3em;
+}
+.chat-markdown.markdown-preview h2 {
+  font-size: 1.1em;
+  margin: 0.5em 0 0.25em;
+}
+.chat-markdown.markdown-preview h3 {
+  font-size: 1.02em;
+  margin: 0.45em 0 0.2em;
+}
+.chat-markdown.markdown-preview p {
+  margin: 0.35em 0;
+}
+.chat-markdown.markdown-preview ul,
+.chat-markdown.markdown-preview ol {
+  margin: 0.3em 0;
+}
+.chat-markdown.markdown-preview blockquote {
+  margin: 0.4em 0;
+}
+.chat-markdown.markdown-preview table {
+  margin: 0.4em 0;
+  font-size: 0.95em;
+}
+/* Code blocks styled by ChatMarkdown chrome; avoid double pre padding from base */
+.chat-markdown.markdown-preview .chat-code-block pre {
+  margin: 0;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+.chat-markdown.markdown-preview .chat-code-block code {
+  background: transparent;
+  border: none;
+  padding: 0;
+}
+/* Generating… status (spinner + shimmer + bouncing dots) */
+@keyframes chat-gen-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes chat-gen-shimmer {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+@keyframes chat-gen-bounce {
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  40% {
+    transform: translateY(-2px);
+    opacity: 1;
+  }
+}
+.chat-gen-spinner {
+  display: inline-block;
+  width: 0.65rem;
+  height: 0.65rem;
+  border: 1.5px solid color-mix(in srgb, var(--shell-accent) 25%, transparent);
+  border-top-color: var(--shell-accent);
+  border-radius: 9999px;
+  animation: chat-gen-spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+.chat-gen-shimmer {
+  animation: chat-gen-shimmer 1.4s ease-in-out infinite;
+}
+.chat-gen-dots {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  margin-left: 1px;
+}
+.chat-gen-dot {
+  display: inline-block;
+  width: 3px;
+  height: 3px;
+  border-radius: 9999px;
+  background: currentColor;
+  animation: chat-gen-bounce 1s ease-in-out infinite;
+}
+.chat-gen-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.chat-gen-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* Message card hover: soft accent ring via shell tokens */
+[data-testid^='chat-msg-'] {
+  outline: none;
+}
+[data-testid^='chat-msg-']:focus-visible {
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--shell-accent) 45%, transparent);
+}
+[data-testid^='chat-msg-'][data-role='user']:hover {
+  border-color: color-mix(in srgb, var(--shell-accent) 50%, transparent);
+}
+[data-testid^='chat-msg-'][data-role='assistant']:hover {
+  border-color: color-mix(in srgb, var(--shell-muted) 55%, transparent);
+}
+
+/* Integrated terminal xterm.js surface (VAL-IDE-031/032)
+ * No top padding — prompt/input sits flush under the cwd bar. */
+.terminal-xterm-host {
+  min-height: 0;
+  padding: 0;
+}
+.terminal-xterm-host .xterm {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+.terminal-xterm-host .xterm-viewport {
+  overflow-y: auto !important;
+}
+.terminal-xterm-host .xterm-screen {
+  height: 100%;
+}
+/* xterm focuses a textarea; keep it in the surface without leaving the panel */
+.terminal-xterm-host .xterm-helper-textarea {
+  /* remain focusable for real keystrokes → PTY */
+  opacity: 0;
+}

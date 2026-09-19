@@ -1,0 +1,259 @@
+# --- OS ---
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+Desktop.ini
+
+# --- Editors / IDE ---
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json.example
+*.swp
+*.swo
+*~
+.history/
+
+# --- Env & secrets (NEVER commit credentials) ---
+# Real env files (keep examples trackable)
+.env
+.env.*
+!.env.example
+!.env.*.example
+*.env
+*.env.local
+*.env.*.local
+.envrc
+.direnv/
+.env.production
+.env.development
+.env.staging
+.env.test
+
+# Credential / key material (filename globs — not Go source packages)
+# Note: broad *secret* globs; re-include the secrethyg package + git secrets
+# guard source so agents can commit redaction code (not credential material).
+*secret*
+*secrets*
+!docs/**/*secret*
+!docs/**/*secrets*
+!internal/secrethyg/
+!internal/secrethyg/**
+# Re-include the git package staged-secret guard source files
+# (internal/git/secrets.go / secrets_test.go implement the pre-commit guard
+# that REFUSES secrets at commit time — they are source, not credential material).
+!internal/git/secrets.go
+!internal/git/secrets_test.go
+*credential*
+*credentials*
+!*credential*.md
+!*credentials*.md
+*.pem
+*.key
+!*.key.md
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.crt
+*.cer
+id_rsa
+id_rsa.*
+id_ed25519
+id_ed25519.*
+id_dsa
+id_dsa.*
+id_ecdsa
+id_ecdsa.*
+*.ppk
+*.kdbx
+auth.json
+token.json
+tokens.json
+*.token
+*.tokens
+service-account*.json
+*-service-account.json
+google-credentials.json
+firebase-adminsdk*.json
+.aws/
+.azure/
+.gcloud/
+.kube/config
+.docker/config.json
+.netrc
+.npmrc
+.pypirc
+.npm/_auth
+.yarnrc.yml
+.pnpmfile.cjs
+# Common raw key filename patterns
+*_api_key*
+*_apikey*
+*.api_key
+*.apikey
+
+# Local app config that often holds API keys
+config.local.*
+**/config/local.*
+**/config/*secrets*
+**/config/*credentials*
+*.local.json
+*.local.yaml
+*.local.yml
+*.local.toml
+providers.local.*
+settings.local.*
+secrets.yaml
+secrets.yml
+secrets.toml
+secrets.json
+credentials.yaml
+credentials.yml
+credentials.toml
+credentials.json
+api-keys.*
+apikeys.*
+api_keys.*
+.byok/
+.byok/*
+keys/
+!docs/**/keys/**
+# Runtime config under home should never be committed from a workspace copy
+.yura-ai/
+**/.yura-ai/config.yaml
+
+# --- Node / JS / frontend ---
+node_modules/
+.npm/
+.yarn/
+.pnpm-store/
+.pnp.*
+.turbo/
+.vite/
+.cache/
+dist/
+build/
+out/
+coverage/
+*.tsbuildinfo
+.next/
+.nuxt/
+.svelte-kit/
+
+# --- Go ---
+bin/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+vendor/
+go.work
+go.work.sum
+
+# --- Wails / desktop build artifacts ---
+build/bin/
+frontend/dist/
+*.app
+*.dmg
+*.AppImage
+*.deb
+*.rpm
+*.msi
+*.pkg
+
+# --- Python (sidecars / tooling) ---
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+.venv/
+venv/
+ENV/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+.tox/
+.nox/
+
+# --- Rust (if any sidecars) ---
+target/
+**/*.rs.bk
+
+# --- Local runtime / agent state ---
+*.db
+*.db-journal
+*.db-wal
+*.sqlite
+*.sqlite3
+data/
+.local/
+.runtime/
+.sessions/
+.cache-agent/
+.tmp/
+tmp/
+temp/
+logs/
+*.log
+playwright-report/
+test-results/
+blob-report/
+
+# Browser profiles / automation artifacts (may hold cookies/sessions)
+.browser-data/
+.browser-profiles/
+.cloak/
+.camoufox/
+.playwright/
+.obscura/
+userdata/
+user-data-dir/
+
+# Multi Brain is local agent memory only — never commit (may hold paths / notes).
+.multibrain/
+
+# Keep the folder, ignore the private design notes inside it.
+# Public documentation (install guide, contributing) is tracked deliberately.
+/docs/*
+!/docs/README.md
+!/docs/INSTALL.md
+
+# RAG / vector local stores stay private:
+.qdrant/
+.chroma/
+vector-store/
+embeddings/
+
+# --- Browser automation / agent-browser artifacts ---
+.playwright-mcp/
+.playwright/
+playwright/.cache/
+**/test-results/
+**/playwright-report/
+**/blob-report/
+
+# --- Misc ---
+*.bak
+*.tmp
+*.temp
+*.orig
+*.rej
+.fleet/
+.claude/
+.cursor/
+.factory/artifacts/
+.opencode/
+.sisyphus/
+
+# --- Local dev runtime (scripts/dev.sh) ---
+.run/
+*.pid
+hub.log
